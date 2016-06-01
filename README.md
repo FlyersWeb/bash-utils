@@ -1,6 +1,6 @@
 #### Introduction
 
-This is a list of useful bash shell script I've made during my career
+This is a useful set of shell script
 
 #### Description
 
