@@ -9,5 +9,6 @@ This is a useful set of shell script
   - **generate_entities.sh** generate symfony entities from database tables
   - **what_ip.sh** send your public IP address by mail
   - **update-all-git.sh** update all subdirectories repositories based on current branch
+  - **pre-commit-node** my pre-commit script for node project, stash changes, check no only|console.log, run tests before commit
 
 
