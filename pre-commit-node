@@ -1,24 +1,26 @@
 #!/usr/bin/env zsh
 
-PATTERNS=('only' 'console\.log');
+PATTERNS=('\.skip' '\.only' 'console\.log');
+RESULT=0
+BRANCH_NAME=$(git branch | grep '*' | sed 's/* //');
 
+if [[ $BRANCH_NAME != '(no branch)' ]]; then
 git stash -q --keep-index
 
-git diff --cached --name-only | while read FILE; do
-  if [[ -f $FILE ]]; then
-    grep -qE "${(j:|:)PATTERNS}" "$FILE"
-    if [ $? -eq 0 ]; then
-      grep --color -nE "${(j:|:)PATTERNS}" "$FILE"
-      exit 1
+  git diff --cached --name-only | while read FILE; do
+    if [[ -f $FILE ]]; then
+      grep -qE "${(j:|:)PATTERNS}" "$FILE"
+      if [ $? -eq 0 ]; then
+        grep --color -nE "${(j:|:)PATTERNS}" "$FILE"
+        exit 1
+      fi
     fi
-  fi
-done || exit $?
+  done || exit $?
 
-npm run test
+  npm run test
 
-RESULT=$?
+  RESULT=$?
 
-git stash pop -q
-
+  git stash pop -q
+fi
 exit $RESULT
-
